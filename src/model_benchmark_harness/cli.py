@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+from dataclasses import asdict
 from pathlib import Path
 
 import typer
@@ -47,7 +48,7 @@ def run(
             "models": model_list,
             "prompt_count": len(prompt_items),
             "results": results_to_jsonable(results),
-            "summaries": [s.__dict__ for s in summaries],
+            "summaries": [asdict(s) for s in summaries],
         },
     )
     write_results_csv(out / "results.csv", results)
