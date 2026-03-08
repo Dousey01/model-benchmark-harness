@@ -1,0 +1,105 @@
+prompts:
+  - id: codegen_01
+    category: code_generation
+    text: "Write a Python function fibonacci(n: int) -> list[int] that returns the first n Fibonacci numbers. Include type hints and a short docstring."
+    rubric:
+      min_chars: 80
+      must_include: ["def fibonacci", "list[int]", "return"]
+
+  - id: codegen_02
+    category: code_generation
+    text: "Implement a Python class LRUCache with get/put methods for integer keys and values. Keep it concise."
+    rubric:
+      min_chars: 120
+      must_include: ["class", "get", "put"]
+
+  - id: codegen_03
+    category: code_generation
+    text: "Generate a SQL query to find top 5 customers by total order value in the last 30 days. Assume orders(customer_id, amount, created_at)."
+    rubric:
+      min_chars: 60
+      must_include: ["SELECT", "GROUP BY", "ORDER BY"]
+
+  - id: debug_01
+    category: debugging
+    text: "Bug: this code returns wrong average when list is empty. Explain and fix:\n\ndef avg(xs):\n    return sum(xs)/len(xs)\n"
+    rubric:
+      min_chars: 80
+      must_include: ["len", "empty", "ZeroDivisionError"]
+
+  - id: debug_02
+    category: debugging
+    text: "Find and fix the bug:\n\ndef is_palindrome(s):\n    return s == reversed(s)\n"
+    rubric:
+      min_chars: 50
+      must_include: ["reversed", "join", "slice"]
+
+  - id: debug_03
+    category: debugging
+    text: "A Python script is slow when concatenating strings in a loop. Explain why and show a better pattern."
+    rubric:
+      min_chars: 70
+      must_include: ["join", "loop"]
+
+  - id: refactor_01
+    category: refactoring
+    text: "Refactor this pseudo-code for readability and testability: validate input, fetch user, compute discount, save invoice, send email."
+    rubric:
+      min_chars: 100
+      must_include: ["function", "separate", "test"]
+
+  - id: refactor_02
+    category: refactoring
+    text: "Suggest a cleaner design for a 400-line function that does parsing, DB writes, and HTTP calls."
+    rubric:
+      min_chars: 90
+      must_include: ["single responsibility", "layer", "dependency"]
+
+  - id: refactor_03
+    category: refactoring
+    text: "Convert nested if/else business logic into a strategy-based design in Python (high-level only)."
+    rubric:
+      min_chars: 80
+      must_include: ["strategy", "class", "interface"]
+
+  - id: reasoning_01
+    category: reasoning
+    text: "You have 8 balls, one is heavier, and a balance scale. Minimum weighings to find the heavier ball? Explain briefly."
+    rubric:
+      min_chars: 40
+      must_include: ["2", "weigh"]
+
+  - id: reasoning_02
+    category: reasoning
+    text: "If all bloops are razzies and some razzies are lazzies, what can be concluded?"
+    rubric:
+      min_chars: 40
+      must_include: ["cannot", "definite"]
+
+  - id: reasoning_03
+    category: reasoning
+    text: "Estimate complexity of checking duplicates in a list using set vs nested loops."
+    rubric:
+      min_chars: 50
+      must_include: ["O(n)", "O(n^2)"]
+
+  - id: explain_01
+    category: concise_explanation
+    text: "Explain REST vs GraphQL in 4 bullet points."
+    rubric:
+      min_chars: 60
+      must_include: ["REST", "GraphQL", "bullet"]
+
+  - id: explain_02
+    category: concise_explanation
+    text: "Explain what a Python virtual environment is in under 60 words."
+    rubric:
+      min_chars: 20
+      must_include: ["dependencies"]
+
+  - id: explain_03
+    category: concise_explanation
+    text: "Explain memoization to a junior developer in 3 sentences."
+    rubric:
+      min_chars: 30
+      must_include: ["cache"]

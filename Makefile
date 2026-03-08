@@ -7,7 +7,7 @@ test:
 	pytest -q
 
 run:
-	mbh run --prompts benchmarks/prompts.yaml --outdir out
+	mbh --prompts benchmarks/prompts.yaml --outdir out
 
 smoke:
-	mbh run --prompts benchmarks/prompts.yaml --outdir out --max-prompts 3
+	mbh --prompts benchmarks/prompts.yaml --outdir out --max-prompts 3
