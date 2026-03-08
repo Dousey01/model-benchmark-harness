@@ -29,6 +29,7 @@ def run(
     max_prompts: int = typer.Option(0, help="Max number of prompts to run"),
     timeout_s: float = typer.Option(60.0, help="Per-call timeout seconds"),
     retries: int = typer.Option(2, help="Retries per call"),
+    offline: bool = typer.Option(False, help="Use deterministic offline mock outputs"),
 ) -> None:
     prompt_items = load_prompts(prompts)
     if max_prompts > 0:
@@ -36,7 +37,9 @@ def run(
 
     model_list = [m.strip() for m in models.split(",") if m.strip()] if models else DEFAULT_MODELS
 
-    results = asyncio.run(run_benchmark(prompt_items, model_list, timeout_s=timeout_s, retries=retries))
+    results = asyncio.run(
+        run_benchmark(prompt_items, model_list, timeout_s=timeout_s, retries=retries, offline=offline)
+    )
     summaries = summarize(results)
 
     out = Path(outdir)
