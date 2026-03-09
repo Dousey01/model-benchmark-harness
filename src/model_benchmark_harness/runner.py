@@ -12,13 +12,31 @@ from .types import BenchmarkResult, PromptItem, Usage
 
 
 class ModelClient:
-    def __init__(self, timeout_s: float = 60.0, retries: int = 2) -> None:
+    def __init__(self, timeout_s: float = 60.0, retries: int = 2, offline: bool = False) -> None:
         self.timeout_s = timeout_s
         self.retries = retries
+        self.offline = offline
 
     async def call_model(self, model: str, prompt: str) -> tuple[str, Usage, float, str | None]:
         start = time.perf_counter()
         error: str | None = None
+
+        if self.offline:
+            await asyncio.sleep(0.01)
+            stable = abs(hash(f"{model}::{prompt}"))
+            usage = Usage(
+                input_tokens=max(10, len(prompt) // 4),
+                output_tokens=80 + (stable % 120),
+                total_tokens=None,
+            )
+            usage.total_tokens = (usage.input_tokens or 0) + (usage.output_tokens or 0)
+            latency_ms = float(40 + (stable % 180))
+            mock_text = (
+                f"[OFFLINE_MOCK] model={model}. "
+                "This is deterministic mock output for benchmark pipeline validation. "
+                "Includes: def, return, strategy, cache, O(n), O(n^2), REST, GraphQL."
+            )
+            return mock_text, usage, latency_ms, None
 
         if model.startswith("local/"):
             api_url = "http://localhost:11434/v1/chat/completions"
@@ -68,8 +86,14 @@ class ModelClient:
         return "", Usage(), latency_ms, error
 
 
-async def run_benchmark(prompts: list[PromptItem], models: list[str], timeout_s: float, retries: int) -> list[BenchmarkResult]:
-    client = ModelClient(timeout_s=timeout_s, retries=retries)
+async def run_benchmark(
+    prompts: list[PromptItem],
+    models: list[str],
+    timeout_s: float,
+    retries: int,
+    offline: bool = False,
+) -> list[BenchmarkResult]:
+    client = ModelClient(timeout_s=timeout_s, retries=retries, offline=offline)
     results: list[BenchmarkResult] = []
 
     for prompt in prompts:

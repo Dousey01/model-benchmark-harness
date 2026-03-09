@@ -29,6 +29,12 @@ make test
 make smoke
 ```
 
+## Offline smoke (deterministic mock mode)
+```bash
+make smoke-offline
+```
+Use this in CI or when APIs/local model runtimes are unavailable.
+
 ## CLI
 ```bash
 mbh \
@@ -37,7 +43,8 @@ mbh \
   --models openai-codex/gpt-5.3-codex,local/qwen2.5:1.5b \
   --max-prompts 3 \
   --timeout-s 45 \
-  --retries 2
+  --retries 2 \
+  --offline
 ```
 
 ## Outputs

@@ -1,4 +1,4 @@
-.PHONY: install test run smoke
+.PHONY: install test run smoke smoke-offline
 
 install:
 	python3 -m pip install -e .[dev]
@@ -11,3 +11,6 @@ run:
 
 smoke:
 	mbh --prompts benchmarks/prompts.yaml --outdir out --max-prompts 3
+
+smoke-offline:
+	mbh --prompts benchmarks/prompts.yaml --outdir out --max-prompts 3 --offline
